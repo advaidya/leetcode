@@ -31,6 +31,58 @@ public class PascalTriangle {
 	  Note:
 	  Could you optimize your algorithm to use only O(k) extra space? 
 	*/
+
+	// Optimized recursive version
+	public ArrayList<Integer> getORow(int rowIndex) {
+		
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		
+		if (0 == rowIndex) {
+			l.add(1);
+			return l;
+		} else if (1 == rowIndex) {
+			l.add(1);
+			l.add(1);
+			return l;
+		} else if (2 == rowIndex) {
+			l.add(1);
+			l.add(2);
+			l.add(1);
+			return l;
+		} else {
+			l.add(1);
+			l.add(2);
+			l.add(1);
+			return getRow(rowIndex, l);
+		}		
+	}
+	
+	private ArrayList<Integer> getRow(int rowIndex, ArrayList<Integer> l) {
+		
+		ArrayList<Integer> nl = new ArrayList<Integer>();
+		
+		for (int i=1;i<l.size();i++) {
+			int s = l.get(i)+l.get(i-1);
+			nl.add(s);
+		}
+		
+		int s = l.size()-2;
+		for (int i=0;i<s;i++) {
+			l.remove(1);
+		}
+		
+		for (int i=1;i<nl.size()+1;i++) {
+			l.add(i, nl.get(i-1));
+		}
+		
+		if (l.size()-1 == rowIndex)
+			return l;
+		else 
+			return getRow(rowIndex, l);
+	}
+	
+	// Recursive solution that constructs all
+	// previous rows - not optimized.
 	public ArrayList<Integer> getRow(int rowIndex) {
 		
 		ArrayList<Integer> l;
